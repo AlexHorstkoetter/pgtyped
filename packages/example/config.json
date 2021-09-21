@@ -13,6 +13,11 @@
   ],
   "srcDir": "./src/",
   "db": {
-    "dbUrl": "postgres://postgres:password@db/postgres"
+    "dbName": "postgres",
+    "user": "postgres",
+    "password": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "ssl": false
   }
 }

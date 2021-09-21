@@ -18,7 +18,8 @@
     "typegen": "pgtyped -c config.json",
     "build": "tsc --declaration",
     "watch": "tsc --declaration --watch --preserveWatchOutput",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "bootstrap": "lerna bootstrap"
   },
   "dependencies": {
     "@pgtyped/cli": "^0.12.0",

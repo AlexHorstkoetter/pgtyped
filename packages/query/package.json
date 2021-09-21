@@ -13,7 +13,8 @@
     "check": "tsc --noEmit",
     "watch": "tsc --declaration --watch --preserveWatchOutput",
     "parsegen-sql": "antlr4ts -visitor -Xexact-output-dir -o src/loader/sql/parser src/loader/sql/grammar/*.g4",
-    "parsegen-ts": "antlr4ts -visitor -Xexact-output-dir -o src/loader/typescript/parser src/loader/typescript/grammar/*.g4"
+    "parsegen-ts": "antlr4ts -visitor -Xexact-output-dir -o src/loader/typescript/parser src/loader/typescript/grammar/*.g4",
+    "bootstrap": "lerna bootstrap"
   },
   "jest": {
     "roots": [

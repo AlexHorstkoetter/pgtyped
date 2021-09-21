@@ -10,7 +10,8 @@
     "test": "jest",
     "build": "tsc --declaration",
     "check": "tsc --noEmit",
-    "watch": "tsc --declaration --watch --preserveWatchOutput"
+    "watch": "tsc --declaration --watch --preserveWatchOutput",
+    "bootstrap": "lerna bootstrap"
   },
   "bin": {
     "pgtyped": "./lib/index.js"
