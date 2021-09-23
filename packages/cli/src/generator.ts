@@ -22,7 +22,7 @@ export interface IField {
 }
 
 const interfaceGen = (interfaceName: string, contents: string) =>
-  `export interface ${interfaceName} {
+  `pub struct ${interfaceName} {
 ${contents}
 }\n\n`;
 
@@ -89,7 +89,7 @@ export async function queryToTypeDeclarations(
   returnTypes.forEach(({ returnName, type, nullable }) => {
     let tsTypeName = types.use(type);
     if (nullable || nullable == null) {
-      tsTypeName += ' | null';
+      tsTypeName = `Option<${tsTypeName}>`;
     }
 
     returnFieldTypes.push({
@@ -115,12 +115,12 @@ export async function queryToTypeDeclarations(
       let tsTypeName = types.use(pgTypeName);
 
       if (!param.required) {
-        tsTypeName += ' | null | void';
+        tsTypeName = `Option<${tsTypeName}>`;
       }
 
       paramFieldTypes.push({
         fieldName: param.name,
-        fieldType: isArray ? `readonly (${tsTypeName})[]` : tsTypeName,
+        fieldType: isArray ? `Vec<${tsTypeName}>` : tsTypeName,
       });
     } else {
       const isArray = param.type === ParamTransform.PickSpread;
@@ -129,12 +129,12 @@ export async function queryToTypeDeclarations(
           const paramType = types.use(params[p.assignedIndex - 1]);
           return p.required
             ? `    ${p.name}: ${paramType}`
-            : `    ${p.name}: ${paramType} | null | void`;
+            : `    ${p.name}: Option<${paramType}>`;
         })
         .join(',\n');
       fieldType = `{\n${fieldType}\n  }`;
       if (isArray) {
-        fieldType = `readonly (${fieldType})[]`;
+        fieldType = `Vec<${fieldType}>`;
       }
       paramFieldTypes.push({
         fieldName: param.name,

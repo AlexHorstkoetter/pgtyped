@@ -1,25 +1,25 @@
 /** Types generated for queries found in "src/books/books.sql" */
-import { PreparedQuery } from '@pgtyped/query';
 
-export type StringArray = (String)[];
 
-export type i32Array = (i32)[];
+pub type StringArray = Vec<String>;
+
+pub type i32Array = Vec<i32>;
 
 /** 'FindBookById' parameters type */
-export interface IFindBookByIdParams {
-  commentId: i32 | null | void;
+pub struct IFindBookByIdParams {
+  commentId: Option<i32>;
 }
 
 /** 'FindBookById' return type */
-export interface IFindBookByIdResult {
+pub struct IFindBookByIdResult {
   id: i32;
-  rank: i32 | null;
-  name: String | null;
-  author_id: i32 | null;
+  rank: Option<i32>;
+  name: Option<String>;
+  author_id: Option<i32>;
 }
 
 /** 'FindBookById' query type */
-export interface IFindBookByIdQuery {
+pub struct IFindBookByIdQuery {
   params: IFindBookByIdParams;
   result: IFindBookByIdResult;
 }
@@ -36,21 +36,21 @@ export const findBookById = new PreparedQuery<IFindBookByIdParams,IFindBookByIdR
 
 
 /** 'InsertBooks' parameters type */
-export interface IInsertBooksParams {
-  books: readonly ({
+pub struct IInsertBooksParams {
+  books: Vec<{
     rank: i32,
     name: String,
     authorId: i32
-  })[];
+  }>;
 }
 
 /** 'InsertBooks' return type */
-export interface IInsertBooksResult {
+pub struct IInsertBooksResult {
   book_id: i32;
 }
 
 /** 'InsertBooks' query type */
-export interface IInsertBooksQuery {
+pub struct IInsertBooksQuery {
   params: IInsertBooksParams;
   result: IInsertBooksResult;
 }
@@ -68,8 +68,8 @@ export const insertBooks = new PreparedQuery<IInsertBooksParams,IInsertBooksResu
 
 
 /** 'UpdateBooksCustom' parameters type */
-export interface IUpdateBooksCustomParams {
-  rank: i32 | null | void;
+pub struct IUpdateBooksCustomParams {
+  rank: Option<i32>;
   id: i32;
 }
 
@@ -77,7 +77,7 @@ export interface IUpdateBooksCustomParams {
 export type IUpdateBooksCustomResult = void;
 
 /** 'UpdateBooksCustom' query type */
-export interface IUpdateBooksCustomQuery {
+pub struct IUpdateBooksCustomQuery {
   params: IUpdateBooksCustomParams;
   result: IUpdateBooksCustomResult;
 }
@@ -102,9 +102,9 @@ export const updateBooksCustom = new PreparedQuery<IUpdateBooksCustomParams,IUpd
 
 
 /** 'UpdateBooks' parameters type */
-export interface IUpdateBooksParams {
-  name: String | null | void;
-  rank: i32 | null | void;
+pub struct IUpdateBooksParams {
+  name: Option<String>;
+  rank: Option<i32>;
   id: i32;
 }
 
@@ -112,7 +112,7 @@ export interface IUpdateBooksParams {
 export type IUpdateBooksResult = void;
 
 /** 'UpdateBooks' query type */
-export interface IUpdateBooksQuery {
+pub struct IUpdateBooksQuery {
   params: IUpdateBooksParams;
   result: IUpdateBooksResult;
 }
@@ -134,20 +134,20 @@ export const updateBooks = new PreparedQuery<IUpdateBooksParams,IUpdateBooksResu
 
 
 /** 'GetBooksByAuthorName' parameters type */
-export interface IGetBooksByAuthorNameParams {
+pub struct IGetBooksByAuthorNameParams {
   authorName: String;
 }
 
 /** 'GetBooksByAuthorName' return type */
-export interface IGetBooksByAuthorNameResult {
+pub struct IGetBooksByAuthorNameResult {
   id: i32;
-  rank: i32 | null;
-  name: String | null;
-  author_id: i32 | null;
+  rank: Option<i32>;
+  name: Option<String>;
+  author_id: Option<i32>;
 }
 
 /** 'GetBooksByAuthorName' query type */
-export interface IGetBooksByAuthorNameQuery {
+pub struct IGetBooksByAuthorNameQuery {
   params: IGetBooksByAuthorNameParams;
   result: IGetBooksByAuthorNameResult;
 }
@@ -166,18 +166,18 @@ export const getBooksByAuthorName = new PreparedQuery<IGetBooksByAuthorNameParam
 
 
 /** 'AggregateEmailsAndTest' parameters type */
-export interface IAggregateEmailsAndTestParams {
-  testAges: i32Array | null | void;
+pub struct IAggregateEmailsAndTestParams {
+  testAges: Option<i32Array>;
 }
 
 /** 'AggregateEmailsAndTest' return type */
-export interface IAggregateEmailsAndTestResult {
-  emails: StringArray | null;
-  agetest: boolean | null;
+pub struct IAggregateEmailsAndTestResult {
+  emails: Option<StringArray>;
+  agetest: Option<boolean>;
 }
 
 /** 'AggregateEmailsAndTest' query type */
-export interface IAggregateEmailsAndTestQuery {
+pub struct IAggregateEmailsAndTestQuery {
   params: IAggregateEmailsAndTestParams;
   result: IAggregateEmailsAndTestResult;
 }

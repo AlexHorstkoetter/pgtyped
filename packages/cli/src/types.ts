@@ -10,17 +10,14 @@ import {
 const String: Type = { name: 'String' };
 const Boolean: Type = { name: 'boolean' };
 const Float: Type = { name: 'f32' };
-const Date: Type = { name: 'Date' };
-const Bytes: Type = { name: 'Buffer' };
-const Void: Type = { name: 'undefined' };
-const Json: Type = {
+/*const Json: Type = {
   name: 'Json',
   definition:
     'null | boolean | number | string | Json[] | { [key: string]: Json }',
-};
+};*/
 const getArray = (baseType: Type): Type => ({
   name: `${baseType.name}Array`,
-  definition: `(${baseType.definition ?? baseType.name})[]`,
+  definition: `Vec<${baseType.definition ?? baseType.name}>`,
 });
 
 export const DefaultTypeMapping = Object.freeze({
@@ -99,11 +96,11 @@ export function TypeMapping(overrides?: Partial<TypeMapping>): TypeMapping {
 }
 
 function declareImport([...names]: Set<string>, from: string): string {
-  return `import { ${names.sort().join(', ')} } from '${from}';\n`;
+  return `use ${from}::{ ${names.sort().join(', ')} };\n`;
 }
 
 function declareAlias(name: string, definition: string): string {
-  return `export type ${name} = ${definition};\n`;
+  return `pub type ${name} = ${definition};\n`;
 }
 
 function declareStringUnion(name: string, values: string[]) {
