@@ -123,8 +123,6 @@ async function main(
   isWatchMode: boolean,
   fileOverride?: string,
 ) {
-  console.log('Tetitest');
-
   const connection = new AsyncQueue();
   debug('starting codegenerator');
   await startup(config.db, connection);

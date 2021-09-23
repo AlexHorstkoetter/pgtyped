@@ -1,21 +1,21 @@
 /** Types generated for queries found in "src/books/books.sql" */
 import { PreparedQuery } from '@pgtyped/query';
 
-export type numberArray = (number)[];
+export type StringArray = (String)[];
 
-export type stringArray = (string)[];
+export type i32Array = (i32)[];
 
 /** 'FindBookById' parameters type */
 export interface IFindBookByIdParams {
-  commentId: number | null | void;
+  commentId: i32 | null | void;
 }
 
 /** 'FindBookById' return type */
 export interface IFindBookByIdResult {
-  id: number;
-  rank: number | null;
-  name: string | null;
-  author_id: number | null;
+  id: i32;
+  rank: i32 | null;
+  name: String | null;
+  author_id: i32 | null;
 }
 
 /** 'FindBookById' query type */
@@ -38,15 +38,15 @@ export const findBookById = new PreparedQuery<IFindBookByIdParams,IFindBookByIdR
 /** 'InsertBooks' parameters type */
 export interface IInsertBooksParams {
   books: readonly ({
-    rank: number,
-    name: string,
-    authorId: number
+    rank: i32,
+    name: String,
+    authorId: i32
   })[];
 }
 
 /** 'InsertBooks' return type */
 export interface IInsertBooksResult {
-  book_id: number;
+  book_id: i32;
 }
 
 /** 'InsertBooks' query type */
@@ -69,8 +69,8 @@ export const insertBooks = new PreparedQuery<IInsertBooksParams,IInsertBooksResu
 
 /** 'UpdateBooksCustom' parameters type */
 export interface IUpdateBooksCustomParams {
-  rank: number | null | void;
-  id: number;
+  rank: i32 | null | void;
+  id: i32;
 }
 
 /** 'UpdateBooksCustom' return type */
@@ -103,9 +103,9 @@ export const updateBooksCustom = new PreparedQuery<IUpdateBooksCustomParams,IUpd
 
 /** 'UpdateBooks' parameters type */
 export interface IUpdateBooksParams {
-  name: string | null | void;
-  rank: number | null | void;
-  id: number;
+  name: String | null | void;
+  rank: i32 | null | void;
+  id: i32;
 }
 
 /** 'UpdateBooks' return type */
@@ -135,15 +135,15 @@ export const updateBooks = new PreparedQuery<IUpdateBooksParams,IUpdateBooksResu
 
 /** 'GetBooksByAuthorName' parameters type */
 export interface IGetBooksByAuthorNameParams {
-  authorName: string;
+  authorName: String;
 }
 
 /** 'GetBooksByAuthorName' return type */
 export interface IGetBooksByAuthorNameResult {
-  id: number;
-  rank: number | null;
-  name: string | null;
-  author_id: number | null;
+  id: i32;
+  rank: i32 | null;
+  name: String | null;
+  author_id: i32 | null;
 }
 
 /** 'GetBooksByAuthorName' query type */
@@ -167,12 +167,12 @@ export const getBooksByAuthorName = new PreparedQuery<IGetBooksByAuthorNameParam
 
 /** 'AggregateEmailsAndTest' parameters type */
 export interface IAggregateEmailsAndTestParams {
-  testAges: numberArray | null | void;
+  testAges: i32Array | null | void;
 }
 
 /** 'AggregateEmailsAndTest' return type */
 export interface IAggregateEmailsAndTestResult {
-  emails: stringArray | null;
+  emails: StringArray | null;
   agetest: boolean | null;
 }
 

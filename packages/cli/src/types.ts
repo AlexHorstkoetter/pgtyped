@@ -7,9 +7,9 @@ import {
   Type,
 } from '@pgtyped/query/lib/type';
 
-const String: Type = { name: 'string' };
-const Number: Type = { name: 'number' };
+const String: Type = { name: 'String' };
 const Boolean: Type = { name: 'boolean' };
+const Float: Type = { name: 'f32' };
 const Date: Type = { name: 'Date' };
 const Bytes: Type = { name: 'Buffer' };
 const Void: Type = { name: 'undefined' };
@@ -25,25 +25,25 @@ const getArray = (baseType: Type): Type => ({
 
 export const DefaultTypeMapping = Object.freeze({
   // Integer types
-  int2: Number,
-  int4: Number,
+  int2: { name: 'i16' },
+  int4: { name: 'i32' },
   int8: String,
-  smallint: Number,
-  int: Number,
-  bigint: String,
+  smallint: { name: 'i16' },
+  int: { name: 'i32' },
+  bigint: { name: 'i64' },
 
   // Precision types
-  real: Number,
-  float4: Number,
-  float: Number,
-  float8: Number,
+  real: { name: 'f' },
+  float4: Float,
+  float: Float,
+  float8: { name: 'f64' },
   numeric: String,
   decimal: String,
 
   // Serial types
-  smallserial: Number,
-  serial: Number,
-  bigserial: String,
+  smallserial: { name: 'u16' },
+  serial: { name: 'u32' },
+  bigserial: { name: 'u64' },
 
   // Common string types
   uuid: String,
@@ -59,6 +59,7 @@ export const DefaultTypeMapping = Object.freeze({
   bool: Boolean,
   boolean: Boolean,
 
+  /* TODO
   // Dates and times
   date: Date,
   timestamp: Date,
@@ -66,6 +67,7 @@ export const DefaultTypeMapping = Object.freeze({
   time: Date,
   timetz: Date,
   interval: String,
+  */
 
   // Network address types
   inet: String,
@@ -75,17 +77,17 @@ export const DefaultTypeMapping = Object.freeze({
 
   // Extra types
   money: String,
-  void: Void,
+  // void: Void,
 
   // JSON types
-  json: Json,
-  jsonb: Json,
+  // json: Json,
+  // jsonb: Json,
 
   // Bytes
-  bytea: Bytes,
+  // bytea: Bytes,
 
   // Postgis types
-  point: getArray(Number),
+  // point: getArray(Number),
 });
 
 export type BuiltinTypes = keyof typeof DefaultTypeMapping;
@@ -105,7 +107,13 @@ function declareAlias(name: string, definition: string): string {
 }
 
 function declareStringUnion(name: string, values: string[]) {
-  return declareAlias(name, values.sort().map((v) => `'${v}'`).join(' | '));
+  return declareAlias(
+    name,
+    values
+      .sort()
+      .map((v) => `'${v}'`)
+      .join(' | '),
+  );
 }
 
 /** Wraps a TypeMapping to track which types have been used, to accumulate errors,
