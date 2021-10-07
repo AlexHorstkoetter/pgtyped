@@ -16,19 +16,20 @@ export const processSQLQueryAST = (
   query: SQLQueryAST,
   passedParams?: IQueryParameters,
 ): IInterpolatedQuery => {
-  const bindings: Scalar[] = [];
+  const bindings: Scalar[] = []; // SQL scalars passed to postgres
   const paramMapping: QueryParam[] = [];
   const usedParams = query.params.filter((p) => p.name in query.usedParamSet);
   const { a: statementStart } = query.statement.loc;
   let i = 1;
   const intervals: { a: number; b: number; sub: string }[] = [];
   for (const usedParam of usedParams) {
+    // subtract the offset of the query from the param locations
     const paramLocs = usedParam.codeRefs.used.map(({ a, b }) => ({
       a: a - statementStart - 1,
       b: b - statementStart,
     }));
 
-    // Handle spread transform
+    // - Handle spread transform -
     if (usedParam.transform.type === TransformType.ArraySpread) {
       let sub: string;
       if (passedParams) {
@@ -58,7 +59,7 @@ export const processSQLQueryAST = (
       continue;
     }
 
-    // Handle pick transform
+    // - Handle pick transform -
     if (usedParam.transform.type === TransformType.PickTuple) {
       const dict: {
         [key: string]: IScalarParam;

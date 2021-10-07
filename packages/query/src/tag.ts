@@ -53,10 +53,12 @@ export class PreparedQuery<TParamType, TResultType> {
   constructor(query: QueryAST) {
     this.query = query;
     this.run = async (params, connection) => {
+      // TODO take this off the hot path
       const { query: processedQuery, bindings } = processSQLQueryAST(
         this.query,
         params as any,
       );
+      // TODO use prepared statements instead
       const result = await connection.query(processedQuery, bindings);
       return result.rows;
     };
