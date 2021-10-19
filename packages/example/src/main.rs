@@ -1,6 +1,5 @@
 mod books;
 mod query;
-mod query_processor;
 
 use tokio_postgres::{Error, NoTls};
 

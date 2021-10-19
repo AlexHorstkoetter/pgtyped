@@ -47,6 +47,7 @@ export interface Param {
     defined?: CodeInterval;
     used: CodeInterval[];
   };
+  isUsed: boolean;
 }
 
 interface CodeInterval {
@@ -65,7 +66,6 @@ export interface Query {
   name: string;
   params: Param[];
   statement: Statement;
-  usedParamSet: { [paramName: string]: true };
 }
 
 interface ParseTree {
@@ -92,8 +92,7 @@ class ParseListener implements SQLParserListener {
   exitQuery() {
     const currentQuery = this.currentQuery as Query;
     currentQuery.params.forEach((p) => {
-      const paramUsed = p.name in currentQuery.usedParamSet;
-      if (!paramUsed) {
+      if (!p.isUsed) {
         this.logger.logEvent({
           type: ParseEventType.Warning,
           message: {
@@ -111,7 +110,6 @@ class ParseListener implements SQLParserListener {
     this.currentQuery = {
       name: ctx.text,
       params: [],
-      usedParamSet: {},
     };
   }
 
@@ -218,12 +216,10 @@ class ParseListener implements SQLParserListener {
 
   enterParamId(ctx: ParamIdContext) {
     assert(this.currentQuery.params);
-    assert(this.currentQuery.usedParamSet);
 
     const paramName = ctx.ID().text;
     const required = !!ctx.S_REQUIRED_MARK();
 
-    this.currentQuery.usedParamSet[paramName] = true;
     const reference = this.currentQuery.params.find(
       (p) => p.name === paramName,
     );
@@ -242,8 +238,10 @@ class ParseListener implements SQLParserListener {
         codeRefs: {
           used: [useLoc],
         },
+        isUsed: true
       });
     } else {
+      reference.isUsed = true;
       reference.required = reference.required || required;
       reference.codeRefs.used.push(useLoc);
     }

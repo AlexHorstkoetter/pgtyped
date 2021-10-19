@@ -18,7 +18,7 @@ export const processSQLQueryAST = (
 ): IInterpolatedQuery => {
   const bindings: Scalar[] = []; // SQL scalars passed to postgres
   const paramMapping: QueryParam[] = [];
-  const usedParams = query.params.filter((p) => p.name in query.usedParamSet);
+  const usedParams = query.params.filter((p) => p.isUsed);
   const { a: statementStart } = query.statement.loc;
   let i = 1;
   const intervals: { a: number; b: number; sub: string }[] = [];

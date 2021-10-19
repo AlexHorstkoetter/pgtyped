@@ -1,5 +1,7 @@
-use std::marker::PhantomData;
+mod query_ast;
+mod util;
 
+use std::marker::PhantomData;
 use tokio_postgres::Client;
 
 pub struct PreparedQuery<P, R> {
@@ -16,12 +18,12 @@ impl<P, R> PreparedQuery<P, R> {
         }
     }
 
-    pub async fn run(&self, client: &Client, params: &P) -> Vec<R> {
+    /*pub async fn run(&self, client: &Client, params: &P) -> Vec<R> {
         client
             .query(&self.query)
             .await
             .expect("query error")
             .iter()
             .map()
-    }
+    }*/
 }
