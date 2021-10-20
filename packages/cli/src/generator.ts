@@ -305,9 +305,11 @@ export async function generateDeclarationFile(
       .split('\n')
       .map((s: string) => ' * ' + s)
       .join('\n');
+
     declarationFileContents += `const ${
       typeDec.query.name
-    }IR: any = ${JSON.stringify(typeDec.query.ast)};\n\n`;
+    }IR: &str = r#"${JSON.stringify(typeDec.query.ast)}"#;\n\n`;
+
     declarationFileContents +=
       `/**\n` +
       ` * Query generated from SQL:\n` +

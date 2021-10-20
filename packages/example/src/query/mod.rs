@@ -1,3 +1,4 @@
+mod interpolated_query;
 mod query_ast;
 mod util;
 
