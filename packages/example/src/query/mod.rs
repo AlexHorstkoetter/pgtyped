@@ -1,5 +1,6 @@
 mod interpolated_query;
 mod query_ast;
+mod query_param;
 mod util;
 
 use std::marker::PhantomData;
